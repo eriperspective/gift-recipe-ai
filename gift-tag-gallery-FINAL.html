@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gift Tag Procurement - Winter Festival 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&family=Merriweather:wght@300;400;700&family=Lora:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(135deg,  #1e272c, #546e7a, #1e272c);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .header h1 {
+            font-family: 'Dancing Script', serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e6e6e6 0%, #fff 25%, #c9c9c9 50%, #f2f2f2 75%, #bfbfbf 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .header h1:hover {
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 25%, #e0e0e0 50%, #fff 75%, #d0d0d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: scale(1.05);
+        }
+        
+        .header p {
+            font-family: 'Merriweather', serif;
+            font-size: 18px;
+            color: #969696;
+        }
+        
+        .carousel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1600px;
+            margin: 60px auto;
+            padding: 40px 20px;
+        }
+        
+        .tag-card-container {
+            perspective: 1500px;
+        }
+        
+        .tag-card {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+            cursor: pointer;
+        }
+        
+        .tag-card.flipped { transform: rotateY(180deg); }
+        
+        .tag-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        
+        .tag-front {
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tag-back {
+            background: white;
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .ribbon-hole {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            border: 4px solid rgba(255,255,255,0.8);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.3);
+        }
+        
+        .ribbon-bow {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 90px;
+            z-index: 14;
+        }
+        
+        .ribbon-bow::before,
+        .ribbon-bow::after {
+            content: '';
+            position: absolute;
+            width: 55px;
+            height: 60px;
+            border-radius: 50% 50% 0 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            top: 20px;
+        }
+        
+        .ribbon-bow::before {
+            left: 0;
+            transform: rotate(-35deg);
+        }
+        
+        .ribbon-bow::after {
+            right: 0;
+            transform: rotate(35deg) scaleX(-1);
+        }
+        
+        .ribbon-tail-left,
+        .ribbon-tail-right {
+            position: absolute;
+            width: 28px; height: 50px; z-index: 13;
+            clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 70% 90%, 30% 100%);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+        
+        .ribbon-tail-left {
+            top: 45px; left: 50%; transform: translateX(-35px) rotate(45deg);
+        }
+        
+        .ribbon-tail-right {
+            top: 45px; left: 50%; transform: translateX(10px) rotate(-50deg);
+        }
+        
+        .tag-header {
+            padding: 70px 25px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .tag-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .recipient {
+            font-family: 'Great Vibes', cursive;
+            font-size: 40px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .greeting {
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+        
+        .gift-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .gift {
+            font-family: 'Merriweather', serif;
+            font-size: 18px;
+            color: #525252;
+            font-weight: 700;
+        }
+        
+        .poem {
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            line-height: 1.6;
+            font-style: italic;
+            padding: 15px;
+            background: rgba(0,0,0,0.02);
+            border-radius: 12px;
+            border-left: 4px solid;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sender {
+            font-family: 'Lora', serif;
+            font-size: 13px;
+            color: #666;
+            text-align: right;
+        }
+        
+        .sender-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .sender-name { font-weight: 600; }
+        
+        .qr-container {
+            border-radius: 15px;
+            padding: 25px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .qr-code {
+            width: 220px;
+            height: 220px;
+            display: block;
+        }
+        
+        .version {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            font-size: 8px;
+            color: rgba(0,0,0,0.3);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Lora', serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        
+        .btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 60px;
+        }
+        
+        .footer p { color: #999; font-size: 13px; }
+        
+        /* Festive */
+        .festive .ribbon-hole,
+        .festive .ribbon-bow::before,
+        .festive .ribbon-bow::after,
+        .festive .ribbon-tail-left,
+        .festive .ribbon-tail-right,
+        .festive .tag-header {
+            background: linear-gradient(135deg, #73001d 0%, #8b0024 25%, #a0002b 50%, #8b0024 75%, #73001d 100%);
+        }
+        .festive .poem { color: #a0002b; border-left-color: #a0002b; }
+        .festive .sender-name { color: #a0002b; }
+        .festive .qr-container { border: 5px solid #a0002b; }
+        .festive .recipient:hover { color: #c0003a; }
+        
+        /* Elegant */
+        .elegant .ribbon-hole,
+        .elegant .ribbon-bow::before,
+        .elegant .ribbon-bow::after,
+        .elegant .ribbon-tail-left,
+        .elegant .ribbon-tail-right,
+        .elegant .tag-header {
+            background: linear-gradient(135deg, #00001c 0%, #0a1a3a 25%, #152a52 50%, #0a1a3a 75%, #00001c 100%);
+        }
+        .elegant .poem { color: #152a52; border-left-color: #152a52; }
+        .elegant .sender-name { color: #152a52; }
+        .elegant .qr-container { border: 5px solid #152a52; }
+        .elegant .recipient:hover { color: #1e3a6f; }
+        
+        /* Minimalist */
+        .minimalist .ribbon-hole,
+        .minimalist .ribbon-bow::before,
+        .minimalist .ribbon-bow::after,
+        .minimalist .ribbon-tail-left,
+        .minimalist .ribbon-tail-right,
+        .minimalist .tag-header {
+            background: linear-gradient(135deg, #5a5047 0%, #6d6155 25%, #807163 50%, #6d6155 75%, #5a5047 100%);
+        }
+        .minimalist .poem { color: #807163; border-left-color: #807163; }
+        .minimalist .sender-name { color: #807163; }
+        .minimalist .qr-container { border: 5px solid #807163; }
+        .minimalist .recipient:hover { color: #998a7a; }
+        
+        /* Playful */
+        .playful .ribbon-hole,
+        .playful .ribbon-bow::before,
+        .playful .ribbon-bow::after,
+        .playful .ribbon-tail-left,
+        .playful .ribbon-tail-right,
+        .playful .tag-header {
+            background: linear-gradient(135deg, #032b19 0%, #0a4028 25%, #125436 50%, #0a4028 75%, #032b19 100%);
+        }
+        .playful .poem { color: #125436; border-left-color: #125436; }
+        .playful .sender-name { color: #125436; }
+        .playful .qr-container { border: 5px solid #125436; }
+        .playful .recipient:hover { color: #1a6d4a; }
+        
+        @media (max-width: 1400px) { .carousel { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { 
+            .header h1 { font-size: 32px; }
+            .carousel { grid-template-columns: 1fr; }
+        }
+        @media print {
+            body { background: white; }
+            .header, .controls, .footer { display: none; }
+            .carousel { display: block; }
+            .tag-card-container { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>The Gift Tag Procurement</h1>
+        <p>Winter Festival by Eri Perspective</p>
+    </div>
+    
+    <div class="carousel-container">
+        <div class="carousel">
+            <!-- Festive -->
+            <div class="tag-card-container festive">
+                <div class="tag-card" onclick="this.classList.toggle('flipped')">
+                    <div class="tag-face tag-front">
+                        <div class="ribbon-hole"></div>
+                        <div class="ribbon-bow"></div>
+                        <div class="ribbon-tail-left"></div>
+                        <div class="ribbon-tail-right"></div>
+                        <div class="tag-header">
+                            <div class="recipient">Count Harringwell</div>
+                            <div class="greeting">Felices Fiestas</div>
+                        </div>
+                        <div class="tag-content">
+                            <div>
+                                <div class="gift-label">Gift</div>
+                                <div class="gift">Royal Velvet Tapestry</div>
+                            </div>
+                            <p class="poem">Un tapiz de terciopelo fino,
+Para calentar con belleza divina.
+Que alegría abrace tu corazón,
+Con gracia invernal en esta ocasión.</p>
+                            <div class="sender">
+                                <span class="sender-label">From</span>
+                                <span class="sender-name">Baron Covingsmith</span>
+                            </div>
+                        </div>
+                        <div class="version">v2.0</div>
+                    </div>
+                    <div class="tag-face tag-back">
+                        <p style="color: #999; font-style: italic;">No QR code<br>Tap to flip</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Elegant -->
+            <div class="tag-card-container elegant">
+                <div class="tag-card" onclick="this.classList.toggle('flipped')">
+                    <div class="tag-face tag-front">
+                        <div class="ribbon-hole"></div>
+                        <div class="ribbon-bow"></div>
+                        <div class="ribbon-tail-left"></div>
+                        <div class="ribbon-tail-right"></div>
+                        <div class="tag-header">
+                            <div class="recipient">Duchess Ashlyn Crest</div>
+                            <div class="greeting">Season's Greetings</div>
+                        </div>
+                        <div class="tag-content">
+                            <div>
+                                <div class="gift-label">Gift</div>
+                                <div class="gift">Silver Jeweled Chalice</div>
+                            </div>
+                            <p class="poem">A chalice wrought of silver bright,
+To grace thy table in candlelight.
+May this vessel hold spirits dear,
+And bring thee joy throughout the year.</p>
+                            <div class="sender">
+                                <span class="sender-label">From</span>
+                                <span class="sender-name">Her Majesty's Festival</span>
+                            </div>
+                        </div>
+                        <div class="version">v2.0</div>
+                    </div>
+                    <div class="tag-face tag-back">
+                        <div class="qr-container">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://example.com/thank-you-royal-decree" alt="QR" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Minimalist -->
+            <div class="tag-card-container minimalist">
+                <div class="tag-card" onclick="this.classList.toggle('flipped')">
+                    <div class="tag-face tag-front">
+                        <div class="ribbon-hole"></div>
+                        <div class="ribbon-bow"></div>
+                        <div class="ribbon-tail-left"></div>
+                        <div class="ribbon-tail-right"></div>
+                        <div class="tag-header">
+                            <div class="recipient">Lady Beth Westone</div>
+                            <div class="greeting">Buone Feste</div>
+                        </div>
+                        <div class="tag-content">
+                            <div>
+                                <div class="gift-label">Gift</div>
+                                <div class="gift">Artisan Chocolates</div>
+                            </div>
+                            <p class="poem">Cioccolatini fatti a mano,
+Prelibatezze della stagione.
+Ogni boccone pieno d'amore,
+Un dono dal cuore per te.</p>
+                            <div class="sender">
+                                <span class="sender-label">From</span>
+                                <span class="sender-name">Baroness Trystenwald</span>
+                            </div>
+                        </div>
+                        <div class="version">v2.0</div>
+                    </div>
+                    <div class="tag-face tag-back">
+                        <div class="qr-container">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://example.com/special-message" alt="QR" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Playful -->
+            <div class="tag-card-container playful">
+                <div class="tag-card" onclick="this.classList.toggle('flipped')">
+                    <div class="tag-face tag-front">
+                        <div class="ribbon-hole"></div>
+                        <div class="ribbon-bow"></div>
+                        <div class="ribbon-tail-left"></div>
+                        <div class="ribbon-tail-right"></div>
+                        <div class="tag-header">
+                            <div class="recipient">Lord Windmere</div>
+                            <div class="greeting">Joyeuses Fêtes</div>
+                        </div>
+                        <div class="tag-content">
+                            <div>
+                                <div class="gift-label">Gift</div>
+                                <div class="gift">Noble Manuscripts</div>
+                            </div>
+                            <p class="poem">Manuscrits de pièces nouvelles,
+Pour celui qui aime la scène.
+Que le rire résonne encore,
+Et les mots nous réjouissent.</p>
+                            <div class="sender">
+                                <span class="sender-label">From</span>
+                                <span class="sender-name">Prince Greyson</span>
+                            </div>
+                        </div>
+                        <div class="version">v2.0</div>
+                    </div>
+                    <div class="tag-face tag-back">
+                        <div class="qr-container">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://example.com/noble-message" alt="QR" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Print Tags</button>
+            <button class="btn" onclick="alert('PDF export ready')"><i class="fas fa-file-pdf"></i> Export PDFs</button>
+            <button class="btn" onclick="alert('Batch download ready')"><i class="fas fa-download"></i> Batch Download</button>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Winter Festival • Gift Tag System v2.0</p>
+        <p style="margin-top: 8px; font-size: 12px;">QR Codes • Real Scannable Links</p>
+    </div>
+</body>
+</html>
+
+
+

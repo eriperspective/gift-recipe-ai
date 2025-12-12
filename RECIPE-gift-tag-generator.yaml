@@ -1,0 +1,142 @@
+name: gift-tag-generator
+description: Generate beautiful, print-ready gift tags with multilingual support, QR codes, and adaptive styling
+
+parameters:
+  recipient_name:
+    type: string
+    description: The name of the gift recipient
+    required: true
+  
+  gift_description:
+    type: string
+    description: What the gift is
+    required: true
+  
+  sender_name:
+    type: string
+    description: Who the gift is from
+    required: true
+  
+  tag_style:
+    type: string
+    description: Visual style of the tag
+    enum: [elegant, playful, minimalist, festive]
+    default: elegant
+  
+  include_poem:
+    type: boolean
+    description: Whether to include a Shakespearean-style poem
+    default: true
+  
+  qr_message_url:
+    type: string
+    description: URL for QR code (optional)
+    required: false
+  
+  gift_size:
+    type: string
+    description: Size of the gift (affects layout)
+    enum: [small, medium, large]
+    default: medium
+  
+  recipient_preferences:
+    type: object
+    description: Recipient preferences for personalization
+    properties:
+      favorite_color:
+        type: string
+        description: Recipient's favorite color
+      language:
+        type: string
+        enum: [English, Spanish, French, Italian]
+        default: English
+      tone:
+        type: string
+        enum: [formal, casual, humorous, heartfelt]
+        default: heartfelt
+
+instructions: |
+  You are creating a beautiful, professional gift tag for the Winter Festival.
+  
+  **DESIGN REQUIREMENTS:**
+  
+  1. **Style Mapping:**
+     - elegant → Dark Navy Blue Gradient (#1a237e to #0d47a1)
+     - playful → Dark Evergreen Gradient (#1b5e20 to #2e7d32)
+     - festive → Dark Cranberry Gradient (#880e4f to #c2185b)
+     - minimalist → Medium Taupe Gradient (#5d4037 to #795548)
+  
+  2. **Tag Shape:**
+     - Tag-shaped card (wide, with hole for ribbon at top)
+     - Elegant satin ribbon through hole in beautiful bow
+     - White card front for content
+     - Clean white back for QR code
+  
+  3. **Typography:**
+     - Cursive fonts for poems/greetings: 'Great Vibes', 'Dancing Script'
+     - Print fonts for names/metadata: 'Merriweather', 'Lora'
+     - Professional, upscale appearance
+  
+  4. **Front Content:**
+     - Recipient name (large, prominent)
+     - Gift description
+     - Sender name
+     - Greeting in selected language
+     - Shakespearean-style poem (if include_poem is true)
+     - Metallic accent words matching style color
+     - Appropriate icon (NO emoji - use professional icons)
+  
+  5. **Back Content:**
+     - QR code centered (if qr_message_url provided)
+     - Fancy border in matching gradient color
+     - Clean white background
+  
+  6. **Multilingual Greetings:**
+     - English: "Season's Greetings"
+     - Spanish: "Felices Fiestas"
+     - French: "Joyeuses Fêtes"
+     - Italian: "Buone Feste"
+  
+  7. **Poem Requirements:**
+     - Match the tone parameter (formal/casual/humorous/heartfelt)
+     - Reference the gift
+     - Shakespearean style with iambic pentameter feel
+     - 4-6 lines
+     - Fit the tag_style aesthetic
+  
+  8. **Size Adaptations:**
+     - small: Compact layout, minimal decoration, smaller fonts
+     - medium: Balanced layout, moderate decoration
+     - large: Spacious layout, elaborate decoration, larger fonts
+  
+  9. **QR Code Generation:**
+     - If qr_message_url is provided, generate actual scannable QR code
+     - Use a QR code API or library (e.g., qrserver.com API)
+     - Center on back of tag with colored border
+  
+  **OUTPUT REQUIREMENTS:**
+  
+  Generate a single, standalone HTML file with:
+  - Inline CSS (no external stylesheets)
+  - Print-ready dimensions
+  - Flip card effect (click to see QR code on back)
+  - Hover glow effect in matching color family
+  - Fully responsive design
+  - Version number in footer
+  - Professional, upscale appearance
+  
+  **PARAMETERS TO USE:**
+  - Recipient: {{ recipient_name }}
+  - Gift: {{ gift_description }}
+  - From: {{ sender_name }}
+  - Style: {{ tag_style }}
+  - Include Poem: {{ include_poem }}
+  - QR URL: {{ qr_message_url }}
+  - Gift Size: {{ gift_size }}
+  - Favorite Color: {{ recipient_preferences.favorite_color }}
+  - Language: {{ recipient_preferences.language }}
+  - Tone: {{ recipient_preferences.tone }}
+  
+  Create the HTML file and save it as "gift-tag-{{ recipient_name | replace(' ', '-') | lower }}.html"
+  
+  The tag must be production-ready, beautiful, and professional.
