@@ -34,7 +34,7 @@ tags = [
         "greeting": "Season's Greetings",
         "tone": "formal",
         "gift_size": "medium",
-        "qr_url": "https://example.com/thank-you-royal-decree",
+        "qr_url": "https://winter-festival-weld.vercel.app/",
         "icon": "👑"
     },
     {
@@ -50,7 +50,7 @@ tags = [
         "greeting": "Buone Feste",
         "tone": "heartfelt",
         "gift_size": "small",
-        "qr_url": "https://example.com/special-message",
+        "qr_url": "https://winter-festival-weld.vercel.app/",
         "icon": "🍫"
     },
     {
@@ -66,7 +66,7 @@ tags = [
         "greeting": "Joyeuses Fêtes",
         "tone": "humorous",
         "gift_size": "small",
-        "qr_url": "https://example.com/noble-message",
+        "qr_url": "https://winter-festival-weld.vercel.app/",
         "icon": "📜"
     }
 ]
